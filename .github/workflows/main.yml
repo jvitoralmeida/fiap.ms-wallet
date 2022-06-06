@@ -35,7 +35,7 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v3
         name: Build & push Docker image
         with: 
-          image: jvitoralmeida/fiap.ms-user
+          image: jvitoralmeida/fiap.ms-wallet
           tag: latest
           registry: docker.io
           dockerfile: ./src/main/docker/Dockerfile.native
