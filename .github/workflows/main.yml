@@ -35,7 +35,7 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v3
         name: Build & push Docker image
         with: 
-          image: jvitoralmeida/fiap.ms-user
+          image: jvitoralmeida/fiap.ms-wallet
           tag: latest
           registry: docker.io
           dockerfile: ./src/main/docker/Dockerfile.native
@@ -45,7 +45,7 @@ jobs:
       - id: 'auth'
         uses: 'google-github-actions/auth@v0'
         with:
-          credentials_json: '${{ secrets.GKE_SECRET_KEY }}'
+          credentials_json: ${{ secrets.GKE_SECRET_KEY }}
 
       - id: 'get-credentials'
         uses: 'google-github-actions/get-gke-credentials@v0'
@@ -54,7 +54,7 @@ jobs:
           location: 'us-east1-b'
       
       - name: 'kubectl apply'
-        run: 'kubectl apply -f git-deployment.yml'
+        run: 'kubectl apply -f kubernetes-deployment.yml'
             
    #   - name: Slack Notification
    #     uses: rtCamp/action-slack-notify@v2
