@@ -71,7 +71,7 @@ spec:
         app: fiap-ms-wallet
   replicas: 1
   strategy:
-    type: RollingUpdate
+    type: Recreate
   template:
     metadata:
       labels:
