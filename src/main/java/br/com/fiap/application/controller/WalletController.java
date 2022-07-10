@@ -3,11 +3,8 @@ package br.com.fiap.application.controller;
 import java.net.URI;
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -22,16 +19,19 @@ public class WalletController {
 
     @GET
     @Path("/{cpf}")
+    @RolesAllowed({"user", "admin"})
     public Wallet findWalletByCPF(String cpf) {
         return Wallet.findByCPF(cpf);
     }
 
     @GET
+    @RolesAllowed({"admin"})
     public List<Wallet> findAll() {
         return Wallet.listAll();
     }
 
     @POST
+    @RolesAllowed({"user","admin"})
     public Response create(Wallet wallet) {
         wallet.persist();
         return Response.created(URI.create("/wallet/" + wallet.id)).build();
@@ -39,7 +39,16 @@ public class WalletController {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"user", "admin"})
     public Wallet findById(String id) {
+        return Wallet.findById(new ObjectId(id));
+    }
+
+
+    @PUT
+    @Path("/{cpf}")
+    @RolesAllowed({"user", "admin"})
+    public Wallet updateWalletStores(String id) {
         return Wallet.findById(new ObjectId(id));
     }
 }
