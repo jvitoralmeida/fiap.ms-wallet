@@ -46,9 +46,10 @@ public class WalletController {
 
 
     @PUT
-    @Path("/{cpf}")
     @RolesAllowed({"user", "admin"})
-    public Wallet updateWalletStores(String id) {
-        return Wallet.findById(new ObjectId(id));
+    public Response updateWallet(Wallet wallet) {
+        wallet.update();
+
+        return Response.noContent().build();
     }
 }
