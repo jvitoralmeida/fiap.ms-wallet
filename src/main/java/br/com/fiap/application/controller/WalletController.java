@@ -36,7 +36,6 @@ public class WalletController {
     }
 
     @POST
-    @RolesAllowed({"user", "admin"})
     public Response create(Wallet wallet) {
         repository.persist(wallet);
 
