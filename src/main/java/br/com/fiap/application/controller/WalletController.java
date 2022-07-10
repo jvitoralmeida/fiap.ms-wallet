@@ -4,10 +4,12 @@ import java.net.URI;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.com.fiap.domain.repository.WalletRepository;
 import org.bson.types.ObjectId;
 
 import br.com.fiap.domain.model.Wallet;
@@ -17,23 +19,27 @@ import br.com.fiap.domain.model.Wallet;
 @Produces(MediaType.APPLICATION_JSON)
 public class WalletController {
 
+    @Inject
+    WalletRepository repository;
+
     @GET
     @Path("/{cpf}")
     @RolesAllowed({"user", "admin"})
     public Wallet findWalletByCPF(String cpf) {
-        return Wallet.findByCPF(cpf);
+        return repository.findByCPF(cpf);
     }
 
     @GET
     @RolesAllowed({"admin"})
     public List<Wallet> findAll() {
-        return Wallet.listAll();
+        return repository.listAll();
     }
 
     @POST
-    @RolesAllowed({"user","admin"})
+    @RolesAllowed({"user", "admin"})
     public Response create(Wallet wallet) {
-        wallet.persist();
+        repository.persist(wallet);
+
         return Response.created(URI.create("/wallet/" + wallet.id)).build();
     }
 
@@ -41,14 +47,15 @@ public class WalletController {
     @Path("/{id}")
     @RolesAllowed({"user", "admin"})
     public Wallet findById(String id) {
-        return Wallet.findById(new ObjectId(id));
+        return repository.findById(new ObjectId(id));
     }
 
 
     @PUT
     @RolesAllowed({"user", "admin"})
     public Response updateWallet(Wallet wallet) {
-        wallet.update();
+
+        repository.update(wallet);
 
         return Response.noContent().build();
     }
