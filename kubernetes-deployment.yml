@@ -100,5 +100,10 @@ spec:
               secretKeyRef:
                 name: keycloak-secrets-t624628kdf
                 key: clientid
+          - name: KEYCLOAK_URL
+            valueFrom:
+              secretKeyRef:
+                name: keycloak-secrets-t624628kdf
+                key: keycloakurl
           - name: MONGO_INITDB_DATABASE
             value: fiap.ms-store
