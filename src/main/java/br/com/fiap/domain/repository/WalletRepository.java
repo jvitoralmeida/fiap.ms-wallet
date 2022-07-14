@@ -9,6 +9,6 @@ import javax.enterprise.context.ApplicationScoped;
 public class WalletRepository implements PanacheMongoRepository<Wallet> {
 
     public Wallet findByCPF(String cpf) {
-        return find("cpf", cpf).firstResult();
+        return list("cpf = ?1",cpf).get(0);
     }
 }
