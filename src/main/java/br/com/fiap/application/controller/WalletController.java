@@ -23,7 +23,7 @@ public class WalletController {
     WalletRepository repository;
 
     @GET
-    @Path("/{cpf}")
+    @Path("/cpf/{cpf}")
     @RolesAllowed({"user", "admin"})
     public Wallet findWalletByCPF(String cpf) {
         return repository.findByCPF(cpf);
